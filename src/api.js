@@ -28,6 +28,8 @@ refs.search.addEventListener(
       .then((data) => {
         dataId(data.hits);
         refs.search.classList.add("move-top");
+        refs.imageList.innerHTML = "";
+
         const markup = template(data);
         refs.imageList.insertAdjacentHTML("beforeend", markup);
         refs.clearBtn.addEventListener("click", (e) => {
@@ -65,7 +67,15 @@ const imageElement = document
     if (e.target.nodeName === "IMG") {
       const dataId = e.target.dataset.id;
       arrayData.forEach(
-        ({ largeImageURL, id, views, comments, likes, downloads }) => {
+        ({
+          largeImageURL,
+          id,
+          views,
+          comments,
+          likes,
+          downloads,
+          fullHDURL,
+        }) => {
           if (id === Number(dataId)) {
             // const markupLightbox = templateImage(arrayData)
             basicLightbox
@@ -86,8 +96,10 @@ const imageElement = document
                 ${comments}
               </p>
               <p class="image__item-about">
-                <i class="material-icons">cloud_download</i>
-                ${downloads}
+              
+              <i class="material-icons">cloud_download</i>
+              ${downloads}
+              
               </p>
               <span class="id">${id}</span>
                 </div>

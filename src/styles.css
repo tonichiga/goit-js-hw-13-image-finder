@@ -91,6 +91,7 @@ li {
 .info-wrap {
   display: flex;
   justify-content: space-around;
+  padding-top: 10px;
 }
 .move-top {
   transform: translateY(-300px);
