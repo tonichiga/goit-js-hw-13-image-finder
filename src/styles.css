@@ -59,6 +59,8 @@ li {
   /* padding-top: 40px; */
 }
 .image {
+  padding-bottom: 20px;
+
   /* padding-top: 40px; */
 }
 .image__link-item {
@@ -151,4 +153,34 @@ li {
 .search-input:hover,
 .search-input:focus {
   border-color: rgb(241, 70, 70);
+}
+.show-more {
+  position: relative;
+
+  display: none;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 700;
+}
+.show-more:hover,
+.show-more:focus {
+  background-color: rgb(241, 70, 70);
+}
+.show-more:active {
+  box-shadow: 0 5px 1 #000000;
+  bottom: -1px;
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
 }

@@ -2,6 +2,9 @@ import debounce from "lodash.debounce";
 import template from "./template.hbs";
 import * as basicLightbox from "basiclightbox";
 import templateImage from "./template-image.hbs";
+// import { getImage } from "./loader.js";
+
+// console.log(getImage);
 
 const key = `19788052-12e74352d9c3069c5841e3f0b`;
 
@@ -12,30 +15,68 @@ const refs = {
   clearBtn: document.querySelector(".btn-clear"),
   searchForm: document.querySelector(".search-input"),
   container: document.querySelector(".container-main"),
+  showMore: document.querySelector(".show-more"),
   // id: document.querySelector(".id"),
 };
+
+let pageCount = 1;
 
 refs.search.addEventListener(
   "input",
   debounce((e) => {
     let searchInput = e.target.value.replace(/ /g, "+");
 
-    console.dir(e);
-
     fetch(
-      `https://pixabay.com/api/?key=${key}&q=${searchInput}&per_page=12&page=1`
+      `https://pixabay.com/api/?key=${key}&q=${searchInput}&per_page=12&page=${pageCount}`
     )
       .then((response) => response.json())
       .then((data) => {
         dataId(data.hits);
         refs.search.classList.add("move-top");
         refs.container.classList.add("move-top-bci");
+        refs.showMore.style.display = "block";
 
         refs.imageList.innerHTML = "";
 
         const markup = template(data);
+
         refs.imageList.insertAdjacentHTML("beforeend", markup);
+
+        // Observer
+
+        const imageLink = document.querySelector(".image__link-item");
+
+        const io = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            console.log(entry);
+            if (entry.isIntersecting === true) {
+              pageCount += 1;
+
+              // fetch(
+              //   `https://pixabay.com/api/?key=${key}&q=${searchInput}&per_page=12&page=${pageCount}`
+              // )
+              //   .then((response) => response.json())
+              //   .then((data) => {
+              //     dataId(data.hits);
+
+              //   });
+              const markup = template(data);
+              refs.imageList.insertAdjacentHTML("beforeend", markup);
+
+              // window.scrollBy({ top: innerHeight, behavior: "smooth" });
+            }
+          });
+        });
+
+        io.observe(refs.showMore);
+
+        // Реализация кнопки show more
+
+        refs.showMore.addEventListener("click", (e) => {});
+
         refs.clearBtn.addEventListener("click", (e) => {
+          refs.showMore.style.display = "none";
+
           refs.search.classList.remove("move-top");
           refs.container.classList.remove("move-top-bci");
 
@@ -49,7 +90,6 @@ refs.search.addEventListener(
 
 let id = [];
 let largeURL = "";
-
 // fetch(`https://pixabay.com/api/?key=${key}&q=flowers&per_page=12&page=1`)
 //   .then((response) => response.json())
 //   .then((data) => {
@@ -62,7 +102,7 @@ let largeURL = "";
 let arrayData = [];
 
 const dataId = (data) => {
-  arrayData = data;
+  arrayData.push(...data);
   return arrayData;
 };
 
@@ -82,6 +122,7 @@ const imageElement = document
           fullHDURL,
         }) => {
           if (id === Number(dataId)) {
+            console.log("yes");
             // const markupLightbox = templateImage(arrayData)
             basicLightbox
               .create(
@@ -116,3 +157,4 @@ const imageElement = document
       );
     }
   });
+//
