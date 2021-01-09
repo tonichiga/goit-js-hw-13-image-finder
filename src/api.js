@@ -11,6 +11,7 @@ const refs = {
   imageElement: document.querySelector(".image__item"),
   clearBtn: document.querySelector(".btn-clear"),
   searchForm: document.querySelector(".search-input"),
+  container: document.querySelector(".container-main"),
   // id: document.querySelector(".id"),
 };
 
@@ -28,12 +29,16 @@ refs.search.addEventListener(
       .then((data) => {
         dataId(data.hits);
         refs.search.classList.add("move-top");
+        refs.container.classList.add("move-top-bci");
+
         refs.imageList.innerHTML = "";
 
         const markup = template(data);
         refs.imageList.insertAdjacentHTML("beforeend", markup);
         refs.clearBtn.addEventListener("click", (e) => {
           refs.search.classList.remove("move-top");
+          refs.container.classList.remove("move-top-bci");
+
           // console.dir(refs.searchForm);
           refs.searchForm.value = "";
           refs.imageList.innerHTML = "";
