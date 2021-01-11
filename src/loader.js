@@ -22,32 +22,6 @@ export const getImage = (key, pageCount) => {
 
           // Observer
 
-          const imageLink = document.querySelector(".image__link-item");
-
-          const io = new IntersectionObserver((entries, observer) => {
-            entries.forEach((entry) => {
-              console.log(entry);
-              if (entry.isIntersecting === true) {
-                pageCount += 1;
-
-                // fetch(
-                //   `https://pixabay.com/api/?key=${key}&q=${searchInput}&per_page=12&page=${pageCount}`
-                // )
-                //   .then((response) => response.json())
-                //   .then((data) => {
-                //     dataId(data.hits);
-
-                //   });
-                const markup = template(data);
-                refs.imageList.insertAdjacentHTML("beforeend", markup);
-
-                // window.scrollBy({ top: innerHeight, behavior: "smooth" });
-              }
-            });
-          });
-
-          io.observe(refs.showMore);
-
           // Реализация кнопки show more
 
           refs.showMore.addEventListener("click", (e) => {});
