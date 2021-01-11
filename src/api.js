@@ -2,9 +2,16 @@ import debounce from "lodash.debounce";
 import template from "./template.hbs";
 import * as basicLightbox from "basiclightbox";
 import templateImage from "./template-image.hbs";
-// import { getImage } from "./loader.js";
+import { defaults } from "@pnotify/core";
+import * as PNotifyAnimate from "../node_modules/@pnotify/animate/dist/PNotifyAnimate.js";
+import {
+  alert,
+  defaultModules,
+} from "../node_modules/@pnotify/core/dist/PNotify.js";
 
-// console.log(getImage);
+defaultModules.set(PNotifyAnimate, {});
+defaults.styling = "material";
+defaults.icons = "material";
 
 const key = `19788052-12e74352d9c3069c5841e3f0b`;
 
@@ -34,6 +41,9 @@ refs.search.addEventListener(
     )
       .then((response) => response.json())
       .then((data) => {
+        if (data.hits.length === 0) {
+          return alert("This pictures is not found!");
+        }
         dataId(data.hits);
         refs.search.classList.add("move-top");
         refs.container.classList.add("move-top-bci");
@@ -42,8 +52,21 @@ refs.search.addEventListener(
         refs.imageList.innerHTML = "";
 
         const markup = template(data);
-
         refs.imageList.insertAdjacentHTML("beforeend", markup);
+        const linkItem = document.querySelectorAll(".image__link-item");
+
+        setTimeout(() => {
+          linkItem.forEach((linkItem) => {
+            linkItem.classList.remove("opacity");
+          });
+        }, 250);
+
+        // removeOpacity(linkItem);
+        // linkItem.classList.remove(".opacity");
+        // linkItem.style.opacity = 1;
+        // setTimeout(() => {
+        //   console.log("timeout");
+        // }, 2000);
 
         // Observer
 
@@ -63,6 +86,12 @@ refs.search.addEventListener(
       });
   }, 1000)
 );
+
+// const removeOpacity = (linkItem) => {
+//   console.log(linkItem);
+//   linkItem.classList.remove("opacity");
+// };
+
 refs.returnBtn.addEventListener("click", (e) => {
   console.log(e);
   console.dir(window.scrollBy);
@@ -83,7 +112,19 @@ const io = new IntersectionObserver((entries, observer) => {
         .then((data) => {
           dataId(data.hits);
           const markup = template(data);
+
           refs.imageList.insertAdjacentHTML("beforeend", markup);
+          const linkItem = document.querySelectorAll(".image__link-item");
+
+          setTimeout(() => {
+            linkItem.forEach((linkItem) => {
+              linkItem.classList.remove("opacity");
+            });
+          }, 250);
+          // const linkItem = document.querySelectorAll(".image__link-item");
+
+          // linkItem.style.opacity = 1;
+          // linkItem.classList.remove("opacity");
         });
 
       // window.scrollBy({ top: innerHeight, behavior: "smooth" });
