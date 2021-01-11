@@ -16,7 +16,7 @@ const refs = {
   searchForm: document.querySelector(".search-input"),
   container: document.querySelector(".container-main"),
   showMore: document.querySelector(".show-more"),
-  returnBtn: document.querySelector(".return-btn"),
+  returnBtn: document.querySelector(".return-container"),
   // id: document.querySelector(".id"),
 };
 
@@ -51,6 +51,7 @@ refs.search.addEventListener(
 
         refs.clearBtn.addEventListener("click", (e) => {
           refs.showMore.style.display = "none";
+          refs.returnBtn.style.display = "none";
 
           refs.search.classList.remove("move-top");
           refs.container.classList.remove("move-top-bci");
@@ -65,7 +66,8 @@ refs.search.addEventListener(
 refs.returnBtn.addEventListener("click", (e) => {
   console.log(e);
   console.dir(window.scrollBy);
-  window.scrollBy({ scrollTop: innerHeight, behavior: "smooth" });
+  window.scrollBy({ top: -window.pageYOffset, behavior: "smooth" });
+  console.log(window);
 });
 const imageLink = document.querySelector(".image__link-item");
 

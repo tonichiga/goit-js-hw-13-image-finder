@@ -189,15 +189,27 @@ li {
   height: 30px;
 }
 .return-btn {
-  width: 60px;
-  height: 30px;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  background-color: rgb(255, 255, 255);
 }
 .return-container {
-  /* display: none; */
+  display: none;
+
+  position: fixed;
   width: 60px;
   height: 30px;
-  position: fixed;
   z-index: 101;
-  right: 30px;
-  top: 500px;
+  right: 20px;
+  top: 600px;
+}
+.material-icons.btn {
+  position: relative;
+  font-weight: 700;
+  padding-right: 0;
+}
+.material-icons.btn:active {
+  box-shadow: 0 5px 1 #000000;
+  bottom: -1px;
 }
