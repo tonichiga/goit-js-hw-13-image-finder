@@ -24,7 +24,6 @@ const refs = {
   container: document.querySelector(".container-main"),
   showMore: document.querySelector(".show-more"),
   returnBtn: document.querySelector(".return-container"),
-  // id: document.querySelector(".id"),
 };
 
 let pageCount = 1;
